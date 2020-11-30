@@ -20,7 +20,7 @@
     font-family: monospace, monospace;
 }
 
-.image {
+.cover {
     width: 150px;
     margin-top: 10px;
     margin:auto;
@@ -38,4 +38,12 @@
 
 h3, h4 {
     margin: 5px;
+}
+
+.bookTitle {
+    margin-top: 0;
+}
+
+.readText {
+    display:inline;
 }
