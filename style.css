@@ -1,0 +1,41 @@
+#library {
+    margin:auto;
+    width: 100%;
+    display:flex;
+}
+
+
+.card {
+    font-family: monospace, monospace;
+    background-color: rgb(218, 218, 218);
+    width: 200px;
+    height: 350px;
+    border-radius: 10px;
+    text-align: center;
+    margin:auto;
+}
+
+#main-title {
+    text-align: center;
+    font-family: monospace, monospace;
+}
+
+.image {
+    width: 150px;
+    margin-top: 10px;
+    margin:auto;
+}
+
+.trash {
+    width: 23px;
+    display:block;
+    margin-left: 175px;
+}
+
+.readCheck {
+    width: 15px;
+}
+
+h3, h4 {
+    margin: 5px;
+}
