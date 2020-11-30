@@ -1,4 +1,8 @@
-let myLibrary = [];
+let myLibrary = [
+    {title: "Laird of the Rungs", author: "Token", pages: "111", read: "true"}
+];
+
+
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -39,10 +43,10 @@ myLibrary.push(newBook);
 console.log(myLibrary);
 }
 
-// addBookToLibrary();
+addBookToLibrary();
 
 const library = document.getElementById("library");
-function createCard() {
+function createCard(book) {
     const card = document.createElement('div');
     card.classList.add("card");
 
@@ -59,20 +63,20 @@ function createCard() {
 
     const bookTitle = document.createElement("h3");
     bookTitle.classList.add("bookTitle");
-    bookTitle.innerHTML = "Title";
+    bookTitle.innerHTML = book.title;
     card.appendChild(bookTitle);
 
     const author = document.createElement("h4");
-    author.innerHTML = "Author";
+    author.innerHTML = book.author;
     card.appendChild(author);
 
     const pages = document.createElement("h4");
-    pages.innerHTML = "Pages";
+    pages.innerHTML = book.pages;
     card.appendChild(pages);
 
     const readOrNot = document.createElement("h4");
     readOrNot.classList.add("readText");
-    readOrNot.innerHTML = "Read";
+    readOrNot.innerHTML = book.read;
     card.appendChild(readOrNot);
 
     const readIcon = document.createElement("img");
@@ -84,5 +88,11 @@ function createCard() {
     library.appendChild(card);
 }
 
-createCard();
+// createCard();
 
+function displayBooks(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        createCard(arr[i]);
+    }
+}
+displayBooks(myLibrary);
