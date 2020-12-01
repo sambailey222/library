@@ -10,6 +10,14 @@ function Book(title, author, cover, pages, read) {
     this.read = read;
 }
 
+
+Book.prototype.toggleReadStatus = function() {
+    if (this.read == "Read") {
+        this.read = "Unfinished";
+    } else {
+        this.read = "Read";
+    }
+}
 // Book.prototype.printTitle = function() {
 //     console.log(this.title)
 // }
@@ -88,9 +96,17 @@ function deleteFromLibrary(index) {
     // remove index item from array
     myLibrary.splice(index, 1);
     // remove card from page (re-populate cards)
-    const cardToDelete = document.getElementById(index);
-    cardToDelete.remove();
-    // displayBooks(myLibrary);
+    // const cardToDelete = document.getElementById(index);
+    // cardToDelete.remove();
+
+    const deleteAllCards = document.querySelectorAll(".card")
+    console.log(deleteAllCards);
+    deleteAllCards.forEach(card => card.remove());
+    displayBooks(myLibrary);
+}
+
+function changeReadStatus(index) {
+    myLibrary[index].toggleReadStatus();
 }
 
 
