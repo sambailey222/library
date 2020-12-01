@@ -38,6 +38,12 @@ let author = document.getElementById("author").value;
 let cover = document.getElementById("cover").value;
 let pages = document.getElementById("pages").value;
 let read = document.getElementById("read").value;
+
+// if cover art is not a valid URL
+// if pages read is not a number
+    // display error messages in placeholder text
+
+// else, update library
 // create object from responses:
 let newBook = new Book(title, author, cover, pages, read);
 console.log(newBook);
@@ -48,25 +54,8 @@ createCard(newBook);
 modal.style.display = "none";
 }
 
-const submitBtn = document.getElementById("submit");
-submitBtn.addEventListener("click", () => addBookToLibrary);
-
-// function addBookToLibrary() {
-//     // take user's input as new book object
-//     let title = prompt("Name of book:", "e.g. LOTR");
-//     let author = prompt("Name of author:", "E.g. Tokenz");
-//     let cover = prompt("Add cover art link")
-//     let pages = prompt("Pages read:", "56");
-//     let read = prompt("Finished the book?", "true or false");
-//     // create object from responses:
-//     let newBook = new Book(title, author, cover, pages, read);
-//     console.log(newBook);
-//     // add new book object to array
-//     myLibrary.push(newBook);
-//     console.log(myLibrary);
-//     }
-
-// addBookToLibrary();
+// const submitBtn = document.getElementById("submit");
+// submitBtn.addEventListener("click", () => addBookToLibrary);
 
 const library = document.getElementById("library");
 function createCard(book) {
@@ -82,10 +71,14 @@ function createCard(book) {
     cover.classList.add("cover");
     // sort out the logic for book cover default etc later
     if (!(book.cover)) {
-    cover.src = "https://images-na.ssl-images-amazon.com/images/I/51uYlDqoIyL._SX326_BO1,204,203,200_.jpg";
+    cover.src = "default_book_cover.jpg";
     } else {
         cover.src = book.cover;
     }
+    cover.onerror = function() {
+        cover.src = "default_book_cover.jpg";
+    }
+
     card.appendChild(cover);
 
     const bookTitle = document.createElement("h3");
