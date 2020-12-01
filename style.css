@@ -91,3 +91,18 @@ h3, h4 {
     text-decoration: none;
     cursor: pointer;
   }
+
+
+
+  .placeholdRed::placeholder {
+    color: red;
+    opacity: 1; /* Firefox */
+  }
+  
+  .placeholdRed:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: red;
+  }
+  
+  .placeholdRed::-ms-input-placeholder { /* Microsoft Edge */
+   color: red;
+  }

@@ -33,39 +33,68 @@ function Book(title, author, cover, pages, read) {
 function addBookToLibrary() {
 // take user's input as new book object
 console.log("sweet child");
-let title = document.getElementById("title").value;
-let author = document.getElementById("author").value;
-let cover = document.getElementById("cover").value;
-let pages = document.getElementById("pages").value;
-let read = document.getElementById("read").value;
+let title = document.getElementById("title");
+let author = document.getElementById("author");
+let cover = document.getElementById("cover");
+let pages = document.getElementById("pages");
+let read = document.querySelector("input[name=read]:checked");
 
+let form = document.getElementById("form")
+let allFieldsValid = true;
 // if cover art is not a valid URL
 // if pages read is not a number
+// if any field except cover art is empty
     // display error messages in placeholder text
-
+if (title.value == "") 
+{
+    title.placeholder = "Please enter a title";
+    title.classList.add("placeholdRed");
+    allFieldsValid = false;
+}
+if (author.value == "") 
+{
+    author.placeholder = "Please enter an author";
+    author.classList.add("placeholdRed");
+    allFieldsValid = false;
+}
+if (pages.value == "") 
+{
+    pages.placeholder = "Please enter a number";
+    pages.classList.add("placeholdRed");
+    allFieldsValid = false;
+}
+if (allFieldsValid == true) {
 // else, update library
 // create object from responses:
-let newBook = new Book(title, author, cover, pages, read);
+let newBook = new Book(title.value, author.value, cover.value, pages.value, read.value);
 console.log(newBook);
 // add new book object to array
 myLibrary.push(newBook);
 console.log(myLibrary);
-createCard(newBook);
+createCard(newBook, myLibrary.length - 1);
 modal.style.display = "none";
+form.reset();
+// can add a function here to reset placeholders
+}
 }
 
 // const submitBtn = document.getElementById("submit");
 // submitBtn.addEventListener("click", () => addBookToLibrary);
 
 const library = document.getElementById("library");
-function createCard(book) {
+
+function createCard(book, id) {
     const card = document.createElement('div');
+    card.id = id;
     card.classList.add("card");
 
     const deleteBtn = document.createElement("img");
     deleteBtn.classList.add("trash");
     deleteBtn.src = "delete-icon.png";
+    // WRITE THIS FUNCTION NEXT
+    deleteBtn.addEventListener("click", () => deleteFromLibrary(card))
     card.appendChild(deleteBtn);
+    
 
     const cover = document.createElement("img");
     cover.classList.add("cover");
@@ -75,10 +104,10 @@ function createCard(book) {
     } else {
         cover.src = book.cover;
     }
+    // if cover image throws an error when loading, replace with stock
     cover.onerror = function() {
         cover.src = "default_book_cover.jpg";
     }
-
     card.appendChild(cover);
 
     const bookTitle = document.createElement("h3");
@@ -112,7 +141,7 @@ function createCard(book) {
 
 function displayBooks(arr) {
     for (var i = 0; i < arr.length; i++) {
-        createCard(arr[i]);
+        createCard(arr[i], i);
     }
 }
 displayBooks(myLibrary);
