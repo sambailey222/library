@@ -40,30 +40,34 @@ let pages = document.getElementById("pages");
 let read = document.querySelector("input[name=read]:checked");
 
 let form = document.getElementById("form")
-let allFieldsValid = true;
+// let allFieldsValid = true;
+
 // if cover art is not a valid URL
 // if pages read is not a number
 // if any field except cover art is empty
     // display error messages in placeholder text
-if (title.value == "") 
-{
-    title.placeholder = "Please enter a title";
-    title.classList.add("placeholdRed");
-    allFieldsValid = false;
-}
-if (author.value == "") 
-{
-    author.placeholder = "Please enter an author";
-    author.classList.add("placeholdRed");
-    allFieldsValid = false;
-}
-if (pages.value == "") 
-{
-    pages.placeholder = "Please enter a number";
-    pages.classList.add("placeholdRed");
-    allFieldsValid = false;
-}
-if (allFieldsValid == true) {
+
+
+// if (title.value == "") 
+// {
+//     title.placeholder = "Please enter a title";
+//     title.classList.add("placeholdRed");
+//     allFieldsValid = false;
+// }
+// if (author.value == "") 
+// {
+//     author.placeholder = "Please enter an author";
+//     author.classList.add("placeholdRed");
+//     allFieldsValid = false;
+// }
+// if (pages.value == "") 
+// {
+//     pages.placeholder = "Please enter a number";
+//     pages.classList.add("placeholdRed");
+//     allFieldsValid = false;
+// }
+// if (allFieldsValid == true) {
+
 // else, update library
 // create object from responses:
 let newBook = new Book(title.value, author.value, cover.value, pages.value, read.value);
@@ -75,24 +79,33 @@ createCard(newBook, myLibrary.length - 1);
 modal.style.display = "none";
 form.reset();
 // can add a function here to reset placeholders
-}
+
 }
 
 // const submitBtn = document.getElementById("submit");
 // submitBtn.addEventListener("click", () => addBookToLibrary);
+function deleteFromLibrary(index) {
+    // remove index item from array
+    myLibrary.splice(index, 1);
+    // remove card from page (re-populate cards)
+    const cardToDelete = document.getElementById(index);
+    cardToDelete.remove();
+    // displayBooks(myLibrary);
+}
+
 
 const library = document.getElementById("library");
 
-function createCard(book, id) {
+function createCard(book, index) {
     const card = document.createElement('div');
-    card.id = id;
+    card.id = index;
     card.classList.add("card");
 
     const deleteBtn = document.createElement("img");
     deleteBtn.classList.add("trash");
     deleteBtn.src = "delete-icon.png";
     // WRITE THIS FUNCTION NEXT
-    deleteBtn.addEventListener("click", () => deleteFromLibrary(card))
+    deleteBtn.addEventListener("click", () => deleteFromLibrary(index))
     card.appendChild(deleteBtn);
     
 
