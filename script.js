@@ -1,5 +1,5 @@
 let myLibrary = [
-    {title: "Laird of the Rungs", author: "Token", pages: "111", read: "Read"}
+    // {title: "Laird of the Rungs", author: "Token", pages: "111", read: "Read"}
 ];
 
 function Book(title, author, cover, pages, read) {
@@ -10,14 +10,16 @@ function Book(title, author, cover, pages, read) {
     this.read = read;
 }
 
-
-Book.prototype.toggleReadStatus = function() {
-    if (this.read == "Read") {
-        this.read = "Unfinished";
+// this is not done on book.prototype as the book constructor gets removed after JSON parse
+function toggleReadStatus (book) {
+    if (book.read == "Read") {
+        book.read = "Unfinished";
     } else {
-        this.read = "Read";
+        book.read = "Read";
     }
 }
+
+
 // Book.prototype.printTitle = function() {
 //     console.log(this.title)
 // }
@@ -82,6 +84,7 @@ let newBook = new Book(title.value, author.value, cover.value, pages.value, read
 console.log(newBook);
 // add new book object to array
 myLibrary.push(newBook);
+populateStorage();
 console.log(myLibrary);
 createCard(newBook, myLibrary.length - 1);
 modal.style.display = "none";
@@ -95,6 +98,7 @@ form.reset();
 function deleteFromLibrary(index) {
     // remove index item from array
     myLibrary.splice(index, 1);
+    populateStorage()
     // remove card from page (re-populate cards)
     // const cardToDelete = document.getElementById(index);
     // cardToDelete.remove();
@@ -107,9 +111,12 @@ function deleteFromLibrary(index) {
 
 function changeReadStatus(icon, text, index) {
     console.log("firing");
-    myLibrary[index].toggleReadStatus();
     console.log(icon);
-    console.log(icon.src);
+    console.log(text);
+    console.log(index);
+    toggleReadStatus(myLibrary[index]);
+    populateStorage();
+    
     if (icon.src.includes("/tick-icon.png")) {
         icon.src = "delete-icon2.png";
         text.textContent = "Unfinished";
@@ -137,7 +144,6 @@ function createCard(book, index) {
     // WRITE THIS FUNCTION NEXT
     deleteBtn.addEventListener("click", () => deleteFromLibrary(index))
     card.appendChild(deleteBtn);
-    
 
     const cover = document.createElement("img");
     cover.classList.add("cover");
@@ -220,3 +226,21 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+function populateStorage() {
+    localStorage.setItem("storedLibrary", JSON.stringify(myLibrary))
+}
+
+function restore() {
+    if (!localStorage.storedLibrary) {
+        displayBooks(myLibrary);
+    } else {
+    let restoredObjects = localStorage.getItem('storedLibrary');
+    restoredObjects = JSON.parse(restoredObjects);
+    myLibrary = restoredObjects;
+    displayBooks(myLibrary);
+    }
+}
+
+restore();
+
