@@ -22,18 +22,18 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <form id="form">
-      <label for="title">Book Title:</label><br>
+      <label for="title" class='modal-text'>Book Title:</label><br>
       <input type="text" id="title" name="title" placeholder="The Hobbit" required/><br>
-      <label for="author">Author:</label><br>
+      <label for="author" class='modal-text'>Author:</label><br>
       <input type="text" id="author" name="author" placeholder="J.R.R.Tolkein"><br>
-      <label for="cover">Link to Cover Art (optional):</label><br>
+      <label for="cover" class='modal-text'>Link to Cover Art (optional):</label><br>
       <input type="text" id="cover" name="cover" placeholder="www.cover-art.com"><br>
-      <label for="pages">Pages read:</label><br>
+      <label for="pages" class='modal-text'>Pages read:</label><br>
       <input type="number" id="pages" name="pages" placeholder="42"><br>
-      <input type="radio" id="read" name="read" value="Read">
-      <label for="read">Finished reading</label><br>
-      <input type="radio" id="unread" name="read" value="Unfinished">
-      <label for="unread">Not yet</label><br>
+      <input type="radio" id="read" class='radioBtn' name="read" value="Read">
+      <label for="read" class='modal-text radioText radioBtn'>Finished reading</label><br>
+      <input type="radio" id="unread" class='radioBtn' name="read" value="Unfinished">
+      <label for="unread" class='modal-text radioText'>Not yet</label><br>
       <input type="button" id="submit" name="submit" value="Add Book" onclick="addBookToLibrary()">
     </form>
   </div>
@@ -61,6 +61,7 @@
 </div>
 </div>
   
+
 </body>
 
 <script src="script.js"></script>
