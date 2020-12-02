@@ -1,5 +1,5 @@
 let myLibrary = [
-    {title: "Laird of the Rungs", author: "Token", pages: "111", read: "true"}
+    {title: "Laird of the Rungs", author: "Token", pages: "111", read: "Read"}
 ];
 
 function Book(title, author, cover, pages, read) {
@@ -105,8 +105,22 @@ function deleteFromLibrary(index) {
     displayBooks(myLibrary);
 }
 
-function changeReadStatus(index) {
+function changeReadStatus(icon, text, index) {
+    console.log("firing");
     myLibrary[index].toggleReadStatus();
+    console.log(icon);
+    console.log(icon.src);
+    if (icon.src.includes("/tick-icon.png")) {
+        icon.src = "delete-icon2.png";
+        text.textContent = "Unfinished";
+        console.log("if 1")
+    } else if (icon.src.includes("/delete-icon2.png")) {
+        icon.src = "tick-icon.png";
+        text.textContent = "Read";
+        console.log("if 2");
+    }
+    console.log(myLibrary[index]);
+    console.log(icon.src);
 }
 
 
@@ -159,12 +173,18 @@ function createCard(book, index) {
 
     const readIcon = document.createElement("img");
     readIcon.classList.add("readCheck");
-    readIcon.src = "tick-icon.png";
+    if (book.read == "Read") {
+        readIcon.src = "tick-icon.png";
+    } else {
+        readIcon.src = "delete-icon2.png";
+    }
+    readIcon.addEventListener("click", () => changeReadStatus(readIcon, readOrNot, index));
     card.appendChild(readIcon);
     
     // add all of the above to library div
     library.appendChild(card);
 }
+
 
 // createCard();
 
