@@ -50,7 +50,7 @@ let pages = document.getElementById("pages");
 let read = document.querySelector("input[name=read]:checked");
 
 let form = document.getElementById("form")
-// let allFieldsValid = true;
+let allFieldsValid = true;
 
 // if cover art is not a valid URL
 // if pages read is not a number
@@ -58,25 +58,26 @@ let form = document.getElementById("form")
     // display error messages in placeholder text
 
 
-// if (title.value == "") 
-// {
-//     title.placeholder = "Please enter a title";
-//     title.classList.add("placeholdRed");
-//     allFieldsValid = false;
-// }
-// if (author.value == "") 
-// {
-//     author.placeholder = "Please enter an author";
-//     author.classList.add("placeholdRed");
-//     allFieldsValid = false;
-// }
-// if (pages.value == "") 
-// {
-//     pages.placeholder = "Please enter a number";
-//     pages.classList.add("placeholdRed");
-//     allFieldsValid = false;
-// }
-// if (allFieldsValid == true) {
+if (title.value == "") 
+{
+    title.placeholder = "Please enter a title";
+    title.classList.add("placeholdRed");
+    allFieldsValid = false;
+}
+if (author.value == "") 
+{
+    author.placeholder = "Please enter an author";
+    author.classList.add("placeholdRed");
+    allFieldsValid = false;
+}
+if (pages.value == "" || pages.value < 0) 
+{
+    pages.value = "";
+    pages.placeholder = "Please enter a positive number";
+    pages.classList.add("placeholdRed");
+    allFieldsValid = false;
+}
+if (allFieldsValid == true) {
 
 // else, update library
 // create object from responses:
@@ -88,9 +89,20 @@ populateStorage();
 console.log(myLibrary);
 createCard(newBook, myLibrary.length - 1);
 modal.style.display = "none";
+resetPlaceholders(title, author, pages);
 form.reset();
 // can add a function here to reset placeholders
 
+    }
+}
+
+function resetPlaceholders(title, author, pages) {
+    title.placeholder = "The Hobbit";
+    title.classList.remove("placeholdRed");
+    author.placeholder = "J.R.R Tolkein";
+    author.classList.remove("placeholdRed");
+    pages.placeholder = "42";
+    pages.classList.remove("placeholdRed");
 }
 
 // const submitBtn = document.getElementById("submit");
@@ -109,7 +121,7 @@ function deleteFromLibrary(index) {
     displayBooks(myLibrary);
 }
 
-function changeReadStatus(icon, text, index) {
+function changeReadStatus(icon, text, button, index) {
     console.log("firing");
     console.log(icon);
     console.log(text);
@@ -119,10 +131,14 @@ function changeReadStatus(icon, text, index) {
     
     if (icon.src.includes("/tick-icon.png")) {
         icon.src = "delete-icon2.png";
+        button.classList.remove('read');
+        button.classList.add('unread');
         text.textContent = "Unfinished";
         console.log("if 1")
     } else if (icon.src.includes("/delete-icon2.png")) {
         icon.src = "tick-icon.png";
+        button.classList.remove('unread');
+        button.classList.add('read');
         text.textContent = "Read";
         console.log("if 2");
     }
@@ -172,20 +188,25 @@ function createCard(book, index) {
     pages.innerHTML = book.pages;
     card.appendChild(pages);
 
+    const readButton = document.createElement('button');
     const readOrNot = document.createElement("h4");
     readOrNot.classList.add("readText");
     readOrNot.innerHTML = book.read;
-    card.appendChild(readOrNot);
+    
 
     const readIcon = document.createElement("img");
     readIcon.classList.add("readCheck");
     if (book.read == "Read") {
         readIcon.src = "tick-icon.png";
+        readButton.classList.add('read');
     } else {
         readIcon.src = "delete-icon2.png";
+        readButton.classList.add('unread');
     }
-    readIcon.addEventListener("click", () => changeReadStatus(readIcon, readOrNot, index));
-    card.appendChild(readIcon);
+    readButton.appendChild(readOrNot);
+    readButton.appendChild(readIcon);
+    readButton.addEventListener("click", () => changeReadStatus(readIcon, readOrNot, readButton, index));
+    card.appendChild(readButton);
     
     // add all of the above to library div
     library.appendChild(card);

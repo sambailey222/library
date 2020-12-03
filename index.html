@@ -30,9 +30,10 @@
       <input type="text" id="cover" name="cover" placeholder="www.cover-art.com"><br>
       <label for="pages" class='modal-text'>Number of pages:</label><br>
       <input type="number" id="pages" name="pages" placeholder="42"><br>
+      <label class='modal-text'>Have you finished this book?</label><br>
       <input type="radio" id="read" class='radioBtn' name="read" value="Read">
-      <label for="read" class='modal-text radioText radioBtn'>Finished reading</label><br>
-      <input type="radio" id="unread" class='radioBtn' name="read" value="Unfinished">
+      <label for="read" class='modal-text radioText radioBtn'>Yes</label><br>
+      <input type="radio" id="unread" class='radioBtn' name="read" value="Unfinished" checked='checked'>
       <label for="unread" class='modal-text radioText'>Not yet</label><br>
       <input type="button" id="submit" name="submit" value="Add Book" onclick="addBookToLibrary()">
     </form>
@@ -47,8 +48,9 @@
       <h3 class="bookTitle">Title</h3>
       <h4>Author</h4>
       <h4>Pages</h4>
+      <button class='unread'>
       <h4 class="readText">Unfinished</h4><img class="readCheck" src="delete-icon2.png">
-    
+      </button>
   </div>
 
 
@@ -59,7 +61,9 @@
   <h3 class="bookTitle">Title</h3>
   <h4>Author</h4>
   <h4>Pages</h4>
+  <button class='read'>
   <h4 class="readText">Read </h4><img class="readCheck" src="tick-icon.png">
+  </button>
 </div>
 </div>
   
