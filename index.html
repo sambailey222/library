@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<h1 id="main-title">Library</h1>
+<h1 id="main-title">Virtual Library</h1>
 <button id="newBook">+ New Book</button>
 
 <!-- The Modal -->
@@ -28,7 +28,7 @@
       <input type="text" id="author" name="author" placeholder="J.R.R.Tolkein"><br>
       <label for="cover" class='modal-text'>Link to Cover Art (optional):</label><br>
       <input type="text" id="cover" name="cover" placeholder="www.cover-art.com"><br>
-      <label for="pages" class='modal-text'>Pages read:</label><br>
+      <label for="pages" class='modal-text'>Number of pages:</label><br>
       <input type="number" id="pages" name="pages" placeholder="42"><br>
       <input type="radio" id="read" class='radioBtn' name="read" value="Read">
       <label for="read" class='modal-text radioText radioBtn'>Finished reading</label><br>
@@ -40,15 +40,17 @@
 
 </div>
 <div id="library">
-<div id="card" class="card">
-  <img class="trash" src="delete-icon.png">
-  <img class="cover" src="https://images-na.ssl-images-amazon.com/images/I/51uYlDqoIyL._SX326_BO1,204,203,200_.jpg">
+  <div id="card" class="card">
+    <img class="trash" src="delete-icon.png">
+    <img class="cover" src="https://images-na.ssl-images-amazon.com/images/I/51uYlDqoIyL._SX326_BO1,204,203,200_.jpg">
+    
+      <h3 class="bookTitle">Title</h3>
+      <h4>Author</h4>
+      <h4>Pages</h4>
+      <h4 class="readText">Unfinished</h4><img class="readCheck" src="delete-icon2.png">
+    
+  </div>
 
-  <h3 class="bookTitle">Title</h3>
-  <h4>Author</h4>
-  <h4>Pages</h4>
-  <h4 class="readText">Unfinished</h4><img class="readCheck" src="delete-icon2.png">
-</div>
 
 <div id="card" class="card">
   <img class="trash" src="delete-icon.png">
