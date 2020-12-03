@@ -1,7 +1,37 @@
+// Example books to populate array on first load
 let myLibrary = [
-    // {title: "Laird of the Rungs", author: "Token", pages: "111", read: "Read"}
+    {   title: 'The Hobbit', 
+        author: 'J.R.R. Tolkein', 
+        cover: 'https://images-na.ssl-images-amazon.com/images/I/51uYlDqoIyL._SX326_BO1,204,203,200_.jpg',
+        pages:  '310',
+        read:   'Read'}
+        ,
+    {   title: 'Ayoade on Ayoade', 
+        author: 'Richard Ayoade', 
+        cover: 'https://images-na.ssl-images-amazon.com/images/I/51neCt-xnBL._SX325_BO1,204,203,200_.jpg',
+        pages:  '307',
+        read:   'Unfinished'}
+        ,
+    {   title: 'Harry Potter and the Half Blood Prince', 
+        author: 'J.K. Rowling', 
+        cover: 'https://upload.wikimedia.org/wikipedia/en/b/b5/Harry_Potter_and_the_Half-Blood_Prince_cover.png',
+        pages:  '607',
+        read:   'Unfinished'}
+        ,
+    {   title: 'Animal Farm', 
+        author: 'George Orwell', 
+        cover: 'https://cdn.waterstones.com/bookjackets/large/9780/1410/9780141036137.jpg',
+        pages:  '112',
+        read:   'Read'}
+        ,
+    {   title: 'A Game of Thrones', 
+        author: 'George R. R. Martin', 
+        cover: 'https://awoiaf.westeros.org/images/9/93/AGameOfThrones.jpg',
+        pages:  '694',
+        read:   'Unfinished'}
 ];
 
+// constructor for new books
 function Book(title, author, cover, pages, read) {
     this.title = title;
     this.author = author;
@@ -10,89 +40,49 @@ function Book(title, author, cover, pages, read) {
     this.read = read;
 }
 
-// this is not done on book.prototype as the book constructor gets removed after JSON parse
-function toggleReadStatus (book) {
-    if (book.read == "Read") {
-        book.read = "Unfinished";
-    } else {
-        book.read = "Read";
-    }
-}
-
-
-// Book.prototype.printTitle = function() {
-//     console.log(this.title)
-// }
-// console.log(Book.prototype)
-
-// function Movie(title) {
-//     this.title = title;
-// }
-
-// Movie.prototype = Object.create(Book.prototype);
-// console.log(Movie.prototype)
-
-// const LOTR = new Book("LOTR", "JRR", 300, true);
-// LOTR.printTitle();
-
-// const fellowship = new Movie("fellowship");
-// fellowship.printTitle();
-
-
-
 function addBookToLibrary() {
-// take user's input as new book object
-console.log("sweet child");
-let title = document.getElementById("title");
-let author = document.getElementById("author");
-let cover = document.getElementById("cover");
-let pages = document.getElementById("pages");
-let read = document.querySelector("input[name=read]:checked");
-
-let form = document.getElementById("form")
-let allFieldsValid = true;
-
-// if cover art is not a valid URL
-// if pages read is not a number
-// if any field except cover art is empty
-    // display error messages in placeholder text
-
-
-if (title.value == "") 
-{
-    title.placeholder = "Please enter a title";
-    title.classList.add("placeholdRed");
-    allFieldsValid = false;
-}
-if (author.value == "") 
-{
-    author.placeholder = "Please enter an author";
-    author.classList.add("placeholdRed");
-    allFieldsValid = false;
-}
-if (pages.value == "" || pages.value < 0) 
-{
-    pages.value = "";
-    pages.placeholder = "Please enter a positive number";
-    pages.classList.add("placeholdRed");
-    allFieldsValid = false;
-}
-if (allFieldsValid == true) {
-
-// else, update library
-// create object from responses:
-let newBook = new Book(title.value, author.value, cover.value, pages.value, read.value);
-console.log(newBook);
-// add new book object to array
-myLibrary.push(newBook);
-populateStorage();
-console.log(myLibrary);
-createCard(newBook, myLibrary.length - 1);
-modal.style.display = "none";
-resetPlaceholders(title, author, pages);
-form.reset();
-// can add a function here to reset placeholders
-
+    // get the form elements
+    let title = document.getElementById("title");
+    let author = document.getElementById("author");
+    let cover = document.getElementById("cover");
+    let pages = document.getElementById("pages");
+    let read = document.querySelector("input[name=read]:checked");
+    let form = document.getElementById("form");
+    // stop form being submitted unless fields have been filled
+    let allFieldsValid = true;
+    // display errors if user tries to submit empty entry
+    if (title.value == "") 
+    {
+        title.placeholder = "Please enter a title";
+        title.classList.add("placeholdRed");
+        allFieldsValid = false;
+    }
+    if (author.value == "") 
+    {
+        author.placeholder = "Please enter an author";
+        author.classList.add("placeholdRed");
+        allFieldsValid = false;
+    }
+    if (pages.value == "" || pages.value < 0) 
+    {
+        pages.value = "";
+        pages.placeholder = "Please enter a positive number";
+        pages.classList.add("placeholdRed");
+        allFieldsValid = false;
+    }
+    // if all fields are filled out, allow myLibrary update
+    if (allFieldsValid == true) 
+    {
+        let newBook = new Book(title.value, author.value, cover.value, pages.value, read.value);
+        // add new book object to array
+        myLibrary.push(newBook);
+        populateStorage();
+        createCard(newBook, myLibrary.length - 1);
+        modal.style.display = "none";
+        // remove error messages and reset form for next entry
+        resetPlaceholders(title, author, pages);
+        form.reset();
+        // can add a function here to reset placeholders
     }
 }
 
@@ -105,95 +95,96 @@ function resetPlaceholders(title, author, pages) {
     pages.classList.remove("placeholdRed");
 }
 
-// const submitBtn = document.getElementById("submit");
-// submitBtn.addEventListener("click", () => addBookToLibrary);
 function deleteFromLibrary(index) {
     // remove index item from array
     myLibrary.splice(index, 1);
     populateStorage()
-    // remove card from page (re-populate cards)
-    // const cardToDelete = document.getElementById(index);
-    // cardToDelete.remove();
-
+    // delete all cards and re-display array (so that indexes will be correct)
     const deleteAllCards = document.querySelectorAll(".card")
-    console.log(deleteAllCards);
     deleteAllCards.forEach(card => card.remove());
     displayBooks(myLibrary);
 }
 
 function changeReadStatus(icon, text, button, index) {
-    console.log("firing");
-    console.log(icon);
-    console.log(text);
-    console.log(index);
+    // update status in myLibrary
     toggleReadStatus(myLibrary[index]);
     populateStorage();
-    
+    // update icons, text and button class of change button
     if (icon.src.includes("/tick-icon.png")) {
         icon.src = "delete-icon2.png";
         button.classList.remove('read');
         button.classList.add('unread');
         text.textContent = "Unfinished";
-        console.log("if 1")
     } else if (icon.src.includes("/delete-icon2.png")) {
         icon.src = "tick-icon.png";
         button.classList.remove('unread');
         button.classList.add('read');
         text.textContent = "Read";
-        console.log("if 2");
     }
-    console.log(myLibrary[index]);
-    console.log(icon.src);
 }
 
+// this is not done on book.prototype as the book constructor gets removed after JSON parse
+function toggleReadStatus (book) {
+    if (book.read == "Read") {
+        book.read = "Unfinished";
+    } else {
+        book.read = "Read";
+    }
+}
 
+// the display library, to which we will append the book cards
 const library = document.getElementById("library");
 
 function createCard(book, index) {
+    //create card
     const card = document.createElement('div');
     card.id = index;
     card.classList.add("card");
 
+    // add delete button
     const deleteBtn = document.createElement("img");
     deleteBtn.classList.add("trash");
     deleteBtn.src = "delete-icon.png";
-    // WRITE THIS FUNCTION NEXT
     deleteBtn.addEventListener("click", () => deleteFromLibrary(index))
     card.appendChild(deleteBtn);
 
+    // add book cover
     const cover = document.createElement("img");
     cover.classList.add("cover");
-    // sort out the logic for book cover default etc later
     if (!(book.cover)) {
     cover.src = "default_book_cover.jpg";
     } else {
         cover.src = book.cover;
     }
-    // if cover image throws an error when loading, replace with stock
+    // if cover image throws an error when loading, replace with stock image
     cover.onerror = function() {
         cover.src = "default_book_cover.jpg";
     }
     card.appendChild(cover);
 
+    // add book title
     const bookTitle = document.createElement("h3");
     bookTitle.classList.add("bookTitle");
     bookTitle.innerHTML = book.title;
     card.appendChild(bookTitle);
 
+    // add author
     const author = document.createElement("h4");
     author.innerHTML = book.author;
     card.appendChild(author);
 
+    // add number of pages
     const pages = document.createElement("h4");
-    pages.innerHTML = book.pages;
+    pages.innerHTML = `Pages: ${book.pages}`;
     card.appendChild(pages);
 
+    // add read button
     const readButton = document.createElement('button');
-    const readOrNot = document.createElement("h4");
-    readOrNot.classList.add("readText");
-    readOrNot.innerHTML = book.read;
-    
-
+    // add read status within button
+    const readStatus = document.createElement("h4");
+    readStatus.classList.add("readText");
+    readStatus.innerHTML = book.read;
+    // add read icon (tick or cross) within button
     const readIcon = document.createElement("img");
     readIcon.classList.add("readCheck");
     if (book.read == "Read") {
@@ -203,56 +194,53 @@ function createCard(book, index) {
         readIcon.src = "delete-icon2.png";
         readButton.classList.add('unread');
     }
-    readButton.appendChild(readOrNot);
+    readButton.appendChild(readStatus);
     readButton.appendChild(readIcon);
-    readButton.addEventListener("click", () => changeReadStatus(readIcon, readOrNot, readButton, index));
+    readButton.addEventListener("click", () => changeReadStatus(readIcon, readStatus, readButton, index));
     card.appendChild(readButton);
     
     // add all of the above to library div
     library.appendChild(card);
 }
 
-
-// createCard();
-
+// display the books in the array
 function displayBooks(arr) {
     for (var i = 0; i < arr.length; i++) {
         createCard(arr[i], i);
     }
 }
-displayBooks(myLibrary);
 
+// ---------- MODAL FORM ---------- //
 // Get the modal
 var modal = document.getElementById("bookForm");
-
 // Get the button that opens the modal
 var btn = document.getElementById("newBook");
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
   modal.style.display = "block";
 }
-
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
 }
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
+// --------------- / MODAL FORM -------------- //
 
+// populate local storage with myLibrary
 function populateStorage() {
     localStorage.setItem("storedLibrary", JSON.stringify(myLibrary))
 }
 
+// restore contents of myLibrary when user refreshes the page
 function restore() {
+    // if local storage is empty, display contents of myLibrary
     if (!localStorage.storedLibrary) {
         displayBooks(myLibrary);
     } else {
@@ -263,5 +251,7 @@ function restore() {
     }
 }
 
+// when the user loads page for first time, they will see the example books
+// after that, any changes they make to the array will be saved to the localStorage
+// to clear local storage, go to Console -> Application, Local Storage, right click File and Clear.
 restore();
-
